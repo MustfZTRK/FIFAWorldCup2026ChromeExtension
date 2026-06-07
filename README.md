@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="icon128.png" alt="FIFA World Cup 2026 Logo" width="100"/>
+  <img src="https://i.pinimg.com/originals/0d/a6/09/0da609fe2283484394f0e6b9c823b746.jpg" alt="FIFA World Cup 2026 Logo" width="100"/>
 </p>
 
 <h1 align="center">⚽ FIFA World Cup 2026 — Chrome Extension</h1>
