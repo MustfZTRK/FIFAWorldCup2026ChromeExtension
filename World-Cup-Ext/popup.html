@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FIFA World Cup 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&family=Noto+Sans+KR:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
@@ -14,8 +17,11 @@
       <h1 id="header-title">World Cup 2026</h1>
     </div>
     <div class="actions">
-      <!-- Language Toggle -->
-      <button id="lang-btn" class="icon-btn">EN</button>
+      <!-- Language Dropdown -->
+      <div class="lang-selector">
+        <button id="lang-btn" class="icon-btn">🌐 EN</button>
+        <div class="lang-dropdown" id="lang-dropdown"></div>
+      </div>
       <!-- Refresh Button -->
       <button id="refresh-btn" class="icon-btn">🔄</button>
     </div>
