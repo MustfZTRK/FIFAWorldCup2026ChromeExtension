@@ -32,6 +32,7 @@ body {
     radial-gradient(circle at 50% 10%, rgba(20, 80, 45, 0.3) 0%, transparent 60%),
     radial-gradient(circle at 10% 90%, rgba(10, 40, 25, 0.4) 0%, transparent 50%);
   color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans JP", "Noto Sans KR", "Noto Sans Devanagari", sans-serif;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -124,6 +125,73 @@ header h1 {
   border-color: var(--live-green);
   font-weight: 700;
   box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+}
+
+/* --- Language Selector Dropdown --- */
+.lang-selector {
+  position: relative;
+}
+
+.lang-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  background: rgba(10, 26, 18, 0.97);
+  border: 1px solid var(--border-gold);
+  border-radius: 8px;
+  padding: 4px 0;
+  z-index: 1000;
+  min-width: 160px;
+  max-height: 320px;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.lang-dropdown.open {
+  display: block;
+}
+
+.lang-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  text-align: left;
+}
+
+.lang-dropdown button:hover {
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--text-primary);
+}
+
+.lang-dropdown button.active-lang {
+  color: var(--gold);
+  font-weight: 700;
+  background: rgba(212, 175, 55, 0.08);
+}
+
+/* RTL support */
+body.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+body.rtl .lang-dropdown {
+  right: auto;
+  left: 0;
+}
+
+body.rtl .main-tabs {
+  flex-direction: row-reverse;
 }
 
 /* --- Status Bar --- */
