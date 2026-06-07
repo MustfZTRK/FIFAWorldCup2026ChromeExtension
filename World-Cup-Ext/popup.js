@@ -1,108 +1,649 @@
 // --- Constants & Database ---
 
-// Multilingual Dictionary
+const supportedLangs = ["en","tr","es","pt","fr","de","ar","ru","it","nl","ko","ja","fa","hi","id","pl"];
+
+const langLabels = {
+  en: "English", tr: "Türkçe", es: "Español", pt: "Português",
+  fr: "Français", de: "Deutsch", ar: "العربية", ru: "Русский",
+  it: "Italiano", nl: "Nederlands", ko: "한국어", ja: "日本語",
+  fa: "فارسی", hi: "हिन्दी", id: "Bahasa Indonesia", pl: "Polski"
+};
+
+const langFlags = {
+  en: "🇬🇧", tr: "🇹🇷", es: "🇪🇸", pt: "🇧🇷",
+  fr: "🇫🇷", de: "🇩🇪", ar: "🇸🇦", ru: "🇷🇺",
+  it: "🇮🇹", nl: "🇳🇱", ko: "🇰🇷", ja: "🇯🇵",
+  fa: "🇮🇷", hi: "🇮🇳", id: "🇮🇩", pl: "🇵🇱"
+};
+
 const translations = {
-  tr: {
-    title: "Dünya Kupası 2026",
-    live: "Canlı",
-    fixtures: "Fikstür",
-    standings: "Puan Durumu",
-    bracket: "Eşleşmeler",
-    simOn: "Durdur",
-    simOff: "Simüle Et",
-    today: "Bugün",
-    byDate: "Tarihe Göre",
-    knockouts: "Eleme Turu",
-    allGroups: "Tüm Gruplar",
-    loading: "Veriler Yükleniyor...",
-    noLive: "Şu anda oynanan canlı maç bulunmuyor.",
-    searchPlaceholder: "Oyuncu ara...",
-    thNum: "#",
-    thPlayer: "Oyuncu",
-    thPos: "Pozisyon",
-    statusLive: "Canlı Simülasyon Aktif",
-    statusAPI: "Veriler API'den alındı",
-    statusOffline: "Çevrimdışı Mod (Yerel Veri)",
-    simTooltip: "Canlı Maç Simülasyonunu Aç/Kapat",
-    elapsed: "Dk",
-    cards: "Kartlar",
-    matchNotStarted: "Başlamadı",
-    matchFinished: "Bitti",
-    r16: "Son 16",
-    r32: "Son 32",
-    qf: "Çeyrek Final",
-    sf: "Yarı Final",
-    third: "Üçüncülük",
-    final: "Final",
-    group: "Grup",
-    posGK: "Kaleci",
-    posDEF: "Defans",
-    posMID: "Orta Saha",
-    posFWD: "Forvet",
-    donate: "Bağış",
-    donate_title: "Bana Bir Kahve Ismarla",
-    donate_subtitle: "Bu eklentiyi faydalı buluyorsanız, geliştirmeyi desteklemeyi düşünün!",
-    copied: "Kopyalandı!"
-  },
   en: {
-    title: "World Cup 2026",
-    live: "Live",
-    fixtures: "Fixtures",
-    standings: "Standings",
-    bracket: "Brackets",
-    simOn: "Stop Sim",
-    simOff: "Simulate",
-    today: "Today",
-    byDate: "By Date",
-    knockouts: "Knockouts",
-    allGroups: "All Groups",
-    loading: "Loading data...",
-    noLive: "No live matches right now.",
-    searchPlaceholder: "Search players...",
-    thNum: "#",
-    thPlayer: "Player",
-    thPos: "Position",
-    statusLive: "Live Simulation Active",
-    statusAPI: "Connected to API",
-    statusOffline: "Offline Mode (Local Data)",
-    simTooltip: "Toggle Live Simulation Mode",
-    elapsed: "Min",
-    cards: "Cards",
-    matchNotStarted: "Not Started",
-    matchFinished: "Finished",
-    r16: "Round of 16",
-    r32: "Round of 32",
-    qf: "Quarter-finals",
-    sf: "Semi-finals",
-    third: "3rd Place",
-    final: "Final",
-    group: "Group",
-    posGK: "Goalkeeper",
-    posDEF: "Defender",
-    posMID: "Midfielder",
-    posFWD: "Forward",
-    donate: "Donate",
-    donate_title: "Buy Me a Coffee",
-    donate_subtitle: "If you find this extension useful, consider supporting development!",
-    copied: "Copied!"
+    title: "World Cup 2026", live: "Live", fixtures: "Fixtures", standings: "Standings", bracket: "Brackets",
+    simOn: "Stop Sim", simOff: "Simulate", today: "Today", byDate: "By Date", knockouts: "Knockouts",
+    allGroups: "All Groups", loading: "Loading data...", noLive: "No live matches right now.",
+    searchPlaceholder: "Search players...", thNum: "#", thPlayer: "Player", thPos: "Position",
+    statusLive: "Live Simulation Active", statusAPI: "Connected to API",
+    statusOffline: "Offline Mode (Local Data)", simTooltip: "Toggle Live Simulation Mode",
+    elapsed: "Min", cards: "Cards", matchNotStarted: "Not Started", matchFinished: "Finished",
+    r16: "Round of 16", r32: "Round of 32", qf: "Quarter-finals", sf: "Semi-finals",
+    third: "3rd Place", final: "Final", group: "Group",
+    posGK: "Goalkeeper", posDEF: "Defender", posMID: "Midfielder", posFWD: "Forward",
+    standingMP: "MP", standingW: "W", standingD: "D", standingL: "L",
+    standingGF: "GF", standingGA: "GA", standingGD: "GD", standingPts: "Pts",
+    lineupShow: "Show Lineups", lineupHide: "Hide Lineups",
+    noSquadData: "Squad data is not available for this team.",
+    noSquadDataShort: "Squad data not available",
+    startingXI: "Starting XI", substitutes: "Substitutes",
+    goalkeepers: "Goalkeepers", defenders: "Defenders", midfielders: "Midfielders", forwards: "Forwards",
+    noMatchFound: "No matches found.", noMatchesToday: "No matches scheduled for today.",
+    donate: "Donate", donate_title: "Buy Me a Coffee",
+    donate_subtitle: "If you find this extension useful, consider supporting development!", copied: "Copied!",
+    labelWinner: "Winner Match", labelLoser: "Loser Match", labelRunnerUp: "Runner-up Group", labelWinnerGroup: "Winner Group", labelThirdGroup: "3rd Group"
+  },
+  tr: {
+    title: "Dünya Kupası 2026", live: "Canlı", fixtures: "Fikstür", standings: "Puan Durumu", bracket: "Eşleşmeler",
+    simOn: "Durdur", simOff: "Simüle Et", today: "Bugün", byDate: "Tarihe Göre", knockouts: "Eleme Turu",
+    allGroups: "Tüm Gruplar", loading: "Veriler Yükleniyor...", noLive: "Şu anda oynanan canlı maç bulunmuyor.",
+    searchPlaceholder: "Oyuncu ara...", thNum: "#", thPlayer: "Oyuncu", thPos: "Pozisyon",
+    statusLive: "Canlı Simülasyon Aktif", statusAPI: "Veriler API'den alındı",
+    statusOffline: "Çevrimdışı Mod (Yerel Veri)", simTooltip: "Canlı Maç Simülasyonunu Aç/Kapat",
+    elapsed: "Dk", cards: "Kartlar", matchNotStarted: "Başlamadı", matchFinished: "Bitti",
+    r16: "Son 16", r32: "Son 32", qf: "Çeyrek Final", sf: "Yarı Final",
+    third: "Üçüncülük", final: "Final", group: "Grup",
+    posGK: "Kaleci", posDEF: "Defans", posMID: "Orta Saha", posFWD: "Forvet",
+    standingMP: "O", standingW: "G", standingD: "B", standingL: "M",
+    standingGF: "AG", standingGA: "YG", standingGD: "AV", standingPts: "P",
+    lineupShow: "Kadro Göster", lineupHide: "Kadro Gizle",
+    noSquadData: "Bu takım için kadro verisi mevcut değil.",
+    noSquadDataShort: "Kadro verisi mevcut değil",
+    startingXI: "İlk 11", substitutes: "Yedekler",
+    goalkeepers: "Kaleciler", defenders: "Defans Oyuncuları", midfielders: "Orta Saha Oyuncuları", forwards: "Forvet Oyuncuları",
+    noMatchFound: "Eşleşme bulunamadı.", noMatchesToday: "Bugün oynanacak maç bulunmuyor.",
+    donate: "Bağış", donate_title: "Bana Bir Kahve Ismarla",
+    donate_subtitle: "Bu eklentiyi faydalı buluyorsanız, geliştirmeyi desteklemeyi düşünün!", copied: "Kopyalandı!",
+    labelWinner: "Galip Maç", labelLoser: "Mağlup Maç", labelRunnerUp: "Grup İkincisi", labelWinnerGroup: "Grup Birincisi", labelThirdGroup: "Grup Üçüncüsü"
+  },
+  es: {
+    title: "Copa Mundial 2026", live: "En Vivo", fixtures: "Fixture", standings: "Clasificación", bracket: "Llave",
+    simOn: "Detener Sim", simOff: "Simular", today: "Hoy", byDate: "Por Fecha", knockouts: "Eliminación",
+    allGroups: "Todos los Grupos", loading: "Cargando datos...", noLive: "No hay partidos en vivo ahora.",
+    searchPlaceholder: "Buscar jugadores...", thNum: "#", thPlayer: "Jugador", thPos: "Posición",
+    statusLive: "Simulación en Vivo", statusAPI: "Conectado a la API",
+    statusOffline: "Modo Sin Conexión (Datos Locales)", simTooltip: "Alternar Simulación en Vivo",
+    elapsed: "Min", cards: "Tarjetas", matchNotStarted: "No Iniciado", matchFinished: "Finalizado",
+    r16: "Octavos de Final", r32: "Treintaydosavos", qf: "Cuartos de Final", sf: "Semifinales",
+    third: "Tercer Puesto", final: "Final", group: "Grupo",
+    posGK: "Portero", posDEF: "Defensa", posMID: "Mediocampista", posFWD: "Delantero",
+    standingMP: "PJ", standingW: "G", standingD: "E", standingL: "P",
+    standingGF: "GF", standingGA: "GC", standingGD: "DG", standingPts: "Pts",
+    lineupShow: "Alineación", lineupHide: "Ocultar Alineación",
+    noSquadData: "No hay datos de plantilla para este equipo.",
+    noSquadDataShort: "Sin datos de plantilla",
+    startingXI: "Titulares", substitutes: "Suplentes",
+    goalkeepers: "Porteros", defenders: "Defensas", midfielders: "Mediocampistas", forwards: "Delanteros",
+    noMatchFound: "No se encontraron partidos.", noMatchesToday: "No hay partidos programados para hoy.",
+    donate: "Donar", donate_title: "Invítame a un Café",
+    donate_subtitle: "Si esta extensión te es útil, considera apoyar el desarrollo.", copied: "¡Copiado!",
+    labelWinner: "Ganador del Partido", labelLoser: "Perdedor del Partido", labelRunnerUp: "Subcampeón del Grupo", labelWinnerGroup: "Campeón del Grupo", labelThirdGroup: "3er Puesto del Grupo"
+  },
+  pt: {
+    title: "Copa do Mundo 2026", live: "Ao Vivo", fixtures: "Jogos", standings: "Classificação", bracket: "Chaveamento",
+    simOn: "Parar Sim", simOff: "Simular", today: "Hoje", byDate: "Por Data", knockouts: "Eliminatória",
+    allGroups: "Todos os Grupos", loading: "Carregando dados...", noLive: "Nenhum jogo ao vivo agora.",
+    searchPlaceholder: "Buscar jogadores...", thNum: "#", thPlayer: "Jogador", thPos: "Posição",
+    statusLive: "Simulação Ao Vivo", statusAPI: "Conectado à API",
+    statusOffline: "Modo Offline (Dados Locais)", simTooltip: "Alternar Simulação Ao Vivo",
+    elapsed: "Min", cards: "Cartões", matchNotStarted: "Não Iniciado", matchFinished: "Finalizado",
+    r16: "Oitavas de Final", r32: "Trinta-e-dois avos", qf: "Quartas de Final", sf: "Semifinais",
+    third: "Terceiro Lugar", final: "Final", group: "Grupo",
+    posGK: "Goleiro", posDEF: "Zagueiro", posMID: "Meio-campista", posFWD: "Atacante",
+    standingMP: "J", standingW: "V", standingD: "E", standingL: "D",
+    standingGF: "GP", standingGA: "GC", standingGD: "SG", standingPts: "Pts",
+    lineupShow: "Escalação", lineupHide: "Ocultar Escalação",
+    noSquadData: "Dados do elenco não disponíveis para esta equipe.",
+    noSquadDataShort: "Sem dados do elenco",
+    startingXI: "Titulares", substitutes: "Reservas",
+    goalkeepers: "Goleiros", defenders: "Zagueiros", midfielders: "Meio-campistas", forwards: "Atacantes",
+    noMatchFound: "Nenhum jogo encontrado.", noMatchesToday: "Nenhum jogo programado para hoje.",
+    donate: "Doar", donate_title: "Me Pague um Café",
+    donate_subtitle: "Se esta extensão é útil para você, considere apoiar o desenvolvimento!", copied: "Copiado!",
+    labelWinner: "Vencedor da Partida", labelLoser: "Perdedor da Partida", labelRunnerUp: "Vice do Grupo", labelWinnerGroup: "Campeão do Grupo", labelThirdGroup: "3º do Grupo"
+  },
+  fr: {
+    title: "Coupe du Monde 2026", live: "En Direct", fixtures: "Calendrier", standings: "Classement", bracket: "Tableau",
+    simOn: "Arrêter Sim", simOff: "Simuler", today: "Aujourd'hui", byDate: "Par Date", knockouts: "Élimination",
+    allGroups: "Tous les Groupes", loading: "Chargement...", noLive: "Aucun match en direct pour le moment.",
+    searchPlaceholder: "Rechercher joueurs...", thNum: "#", thPlayer: "Joueur", thPos: "Poste",
+    statusLive: "Simulation En Direct", statusAPI: "Connecté à l'API",
+    statusOffline: "Mode Hors Ligne (Données Locales)", simTooltip: "Basculer la Simulation En Direct",
+    elapsed: "Min", cards: "Cartons", matchNotStarted: "Pas Commencé", matchFinished: "Terminé",
+    r16: "Huitièmes de Finale", r32: "Trente-deuxièmes", qf: "Quarts de Finale", sf: "Demi-finales",
+    third: "Troisième Place", final: "Finale", group: "Groupe",
+    posGK: "Gardien", posDEF: "Défenseur", posMID: "Milieu", posFWD: "Attaquant",
+    standingMP: "J", standingW: "G", standingD: "N", standingL: "P",
+    standingGF: "BP", standingGA: "BC", standingGD: "DIFF", standingPts: "Pts",
+    lineupShow: "Composition", lineupHide: "Masquer Composition",
+    noSquadData: "Données d'effectif non disponibles pour cette équipe.",
+    noSquadDataShort: "Pas de données d'effectif",
+    startingXI: "Titulaires", substitutes: "Remplaçants",
+    goalkeepers: "Gardiens", defenders: "Défenseurs", midfielders: "Milieux", forwards: "Attaquants",
+    noMatchFound: "Aucun match trouvé.", noMatchesToday: "Aucun match prévu aujourd'hui.",
+    donate: "Donner", donate_title: "Offrez-moi un Café",
+    donate_subtitle: "Si cette extension vous est utile, envisagez de soutenir le développement !", copied: "Copié !",
+    labelWinner: "Vainqueur du Match", labelLoser: "Perdant du Match", labelRunnerUp: "Deuxième du Groupe", labelWinnerGroup: "Premier du Groupe", labelThirdGroup: "3ème du Groupe"
+  },
+  de: {
+    title: "Fußball-Weltmeisterschaft 2026", live: "Live", fixtures: "Spielplan", standings: "Tabelle", bracket: "Turnierbaum",
+    simOn: "Sim Stoppen", simOff: "Simulieren", today: "Heute", byDate: "Nach Datum", knockouts: "K.o.-Runde",
+    allGroups: "Alle Gruppen", loading: "Lade Daten...", noLive: "Gerade keine Live-Spiele.",
+    searchPlaceholder: "Spieler suchen...", thNum: "#", thPlayer: "Spieler", thPos: "Position",
+    statusLive: "Live-Simulation Aktiv", statusAPI: "Mit API verbunden",
+    statusOffline: "Offline-Modus (Lokale Daten)", simTooltip: "Live-Simulation Ein-/Ausschalten",
+    elapsed: "Min", cards: "Karten", matchNotStarted: "Noch nicht begonnen", matchFinished: "Beendet",
+    r16: "Achtelfinale", r32: "Zweiunddreißigstelfinale", qf: "Viertelfinale", sf: "Halbfinale",
+    third: "Spiel um Platz 3", final: "Finale", group: "Gruppe",
+    posGK: "Torwart", posDEF: "Abwehrspieler", posMID: "Mittelfeldspieler", posFWD: "Stürmer",
+    standingMP: "Sp", standingW: "S", standingD: "U", standingL: "N",
+    standingGF: "T", standingGA: "GT", standingGD: "TD", standingPts: "Pkt",
+    lineupShow: "Aufstellung", lineupHide: "Aufstellung Ausblenden",
+    noSquadData: "Kaderdaten für dieses Team nicht verfügbar.",
+    noSquadDataShort: "Keine Kaderdaten",
+    startingXI: "Startelf", substitutes: "Ersatzbank",
+    goalkeepers: "Torhüter", defenders: "Abwehrspieler", midfielders: "Mittelfeldspieler", forwards: "Stürmer",
+    noMatchFound: "Keine Spiele gefunden.", noMatchesToday: "Heute sind keine Spiele geplant.",
+    donate: "Spenden", donate_title: "Laden Sie mich auf einen Kaffee ein",
+    donate_subtitle: "Wenn Ihnen diese Erweiterung nützlich ist, unterstützen Sie gerne die Entwicklung!", copied: "Kopiert!",
+    labelWinner: "Spielsieger", labelLoser: "Spielverlierer", labelRunnerUp: "Zweiter der Gruppe", labelWinnerGroup: "Gruppensieger", labelThirdGroup: "3. der Gruppe"
+  },
+  ar: {
+    title: "كأس العالم 2026", live: "مباشر", fixtures: "المباريات", standings: "الترتيب", bracket: "الجدول",
+    simOn: "إيقاف المحاكاة", simOff: "محاكاة", today: "اليوم", byDate: "حسب التاريخ", knockouts: "الإقصاء",
+    allGroups: "جميع المجموعات", loading: "جارٍ التحميل...", noLive: "لا توجد مباريات مباشرة الآن.",
+    searchPlaceholder: "بحث عن لاعبين...", thNum: "#", thPlayer: "اللاعب", thPos: "المركز",
+    statusLive: "محاكاة مباشرة", statusAPI: "متصل بالـ API",
+    statusOffline: "وضع عدم الاتصال (بيانات محلية)", simTooltip: "تبديل المحاكاة المباشرة",
+    elapsed: "د", cards: "بطاقات", matchNotStarted: "لم تبدأ", matchFinished: "انتهت",
+    r16: "دور الـ 16", r32: "دور الـ 32", qf: "ربع النهائي", sf: "نصف النهائي",
+    third: "المركز الثالث", final: "النهائي", group: "المجموعة",
+    posGK: "حارس المرمى", posDEF: "مدافع", posMID: "لاعب وسط", posFWD: "مهاجم",
+    standingMP: "م", standingW: "ف", standingD: "ت", standingL: "خ",
+    standingGF: "له", standingGA: "عليه", standingGD: "الفرق", standingPts: "نقاط",
+    lineupShow: "عرض التشكيلة", lineupHide: "إخفاء التشكيلة",
+    noSquadData: "بيانات القائمة غير متاحة لهذه الفريق.",
+    noSquadDataShort: "بيانات القائمة غير متاحة",
+    startingXI: "الtitulaires", substitutes: "البدلاء",
+    goalkeepers: "حراس المرمى", defenders: "المدافعين", midfielders: "لاعبو الوسط", forwards: "المهاجمون",
+    noMatchFound: "لم يتم العثور على مباريات.", noMatchesToday: "لا توجد مباريات مقررة اليوم.",
+    donate: "تبرع", donate_title: "ادعوني لقهوة",
+    donate_subtitle: "إذا كانت هذه الإضافة مفيدة لك، فكر في دعم التطوير!", copied: "تم النسخ!",
+    labelWinner: "فائز المباراة", labelLoser: "خاسر المباراة", labelRunnerUp: "وصيف المجموعة", labelWinnerGroup: "بطل المجموعة", labelThirdGroup: "ثالث المجموعة"
+  },
+  ru: {
+    title: "Чемпионат Мира 2026", live: "Прямая Трансляция", fixtures: "Расписание", standings: "Турнирная Таблица", bracket: "Сетка",
+    simOn: "Стоп Симуляция", simOff: "Симуляция", today: "Сегодня", byDate: "По Дате", knockouts: "Плей-офф",
+    allGroups: "Все Группы", loading: "Загрузка данных...", noLive: "Сейчас нет canlı матчей.",
+    searchPlaceholder: "Поиск игроков...", thNum: "#", thPlayer: "Игрок", thPos: "Позиция",
+    statusLive: "Прямая Симуляция", statusAPI: "Подключено к API",
+    statusOffline: "Автономный Режим (Локальные Данные)", simTooltip: "Включить/Выключить Симуляцию",
+    elapsed: "Мин", cards: "Карточки", matchNotStarted: "Не Начат", matchFinished: "Завершён",
+    r16: "1/8 Финала", r32: "1/16 Финала", qf: "1/4 Финала", sf: "Полуфинал",
+    third: "Матч за 3-е Место", final: "Финал", group: "Группа",
+    posGK: "Вратарь", posDEF: "Защитник", posMID: "Полузащитник", posFWD: "Нападающий",
+    standingMP: "И", standingW: "В", standingD: "Н", standingL: "П",
+    standingGF: "Заб", standingGA: "Проп", standingGD: "Разн", standingPts: "Очк",
+    lineupShow: "Показать Состав", lineupHide: "Скрыть Состав",
+    noSquadData: "Данные состава недоступны для этой команды.",
+    noSquadDataShort: "Данные состава недоступны",
+    startingXI: "Основной Состав", substitutes: "Запасные",
+    goalkeepers: "Вратари", defenders: "Защитники", midfielders: "Полузащитники", forwards: "Нападающие",
+    noMatchFound: "Матчи не найдены.", noMatchesToday: "На сегодня матчи не запланированы.",
+    donate: "Пожертвовать", donate_title: "Угостите меня Кофе",
+    donate_subtitle: "Если это расширение полезно вам, поддержите разработку!", copied: "Скопировано!",
+    labelWinner: "Победитель Матча", labelLoser: "Проигравший Матча", labelRunnerUp: "Второе Место в Группе", labelWinnerGroup: "Победитель Группы", labelThirdGroup: "3-е Место в Группе"
+  },
+  it: {
+    title: "Coppa del Mondo 2026", live: "In Diretta", fixtures: "Calendario", standings: "Classifica", bracket: "Tabellone",
+    simOn: "Ferma Sim", simOff: "Simula", today: "Oggi", byDate: "Per Data", knockouts: "Eliminazione Diretta",
+    allGroups: "Tutti i Gruppi", loading: "Caricamento...", noLive: "Nessuna partita in diretta ora.",
+    searchPlaceholder: "Cerca giocatori...", thNum: "#", thPlayer: "Giocatore", thPos: "Posizione",
+    statusLive: "Simulazione in Diretta", statusAPI: "Connesso all'API",
+    statusOffline: "Modalità Offline (Dati Locali)", simTooltip: "Attiva/Disattiva Simulazione in Diretta",
+    elapsed: "Min", cards: "Cartellini", matchNotStarted: "Non Iniziata", matchFinished: "Finita",
+    r16: "Ottavi di Finale", r32: "Sedicesimi di Finale", qf: "Quarti di Finale", sf: "Semifinali",
+    third: "Finale Terzo Posto", final: "Finale", group: "Girone",
+    posGK: "Portiere", posDEF: "Difensore", posMID: "Centrocampista", posFWD: "Attaccante",
+    standingMP: "G", standingW: "V", standingD: "P", standingL: "S",
+    standingGF: "Fatti", standingGA: "Subiti", standingGD: "DR", standingPts: "Pt",
+    lineupShow: "Schieramento", lineupHide: "Nascondi Schieramento",
+    noSquadData: "Dati rosa non disponibili per questa squadra.",
+    noSquadDataShort: "Nessun dato rosa",
+    startingXI: "Titolari", substitutes: "Panchina",
+    goalkeepers: "Portieri", defenders: "Difensori", midfielders: "Centrocampisti", forwards: "Attaccanti",
+    noMatchFound: "Nessuna partita trovata.", noMatchesToday: "Nessuna partita prevista per oggi.",
+    donate: "Dona", donate_title: "Offrimi un Caffè",
+    donate_subtitle: "Se questa estensione ti è utile, considera di supportare lo sviluppo!", copied: "Copiato!",
+    labelWinner: "Vincitore della Partita", labelLoser: "Sconfitto della Partita", labelRunnerUp: "Secondo del Girone", labelWinnerGroup: "Primo del Girone", labelThirdGroup: "3° del Girone"
+  },
+  nl: {
+    title: "WK 2026", live: "Live", fixtures: "Wedstrijden", standings: "Stand", bracket: "Knockout Schema",
+    simOn: "Stop Sim", simOff: "Simuleer", today: "Vandaag", byDate: "Op Datum", knockouts: "Knockout",
+    allGroups: "Alle Groepen", loading: "Laden...", noLive: "Geen live wedstrijden nu.",
+    searchPlaceholder: "Spelers zoeken...", thNum: "#", thPlayer: "Speler", thPos: "Positie",
+    statusLive: "Live Simulatie Actief", statusAPI: "Verbonden met API",
+    statusOffline: "Offline Modus (Lokale Gegevens)", simTooltip: "Live Simulatie In-/Uitschakelen",
+    elapsed: "Min", cards: "Kaarten", matchNotStarted: "Niet Begonnen", matchFinished: "Afgelopen",
+    r16: "Achtste Finales", r32: "Zesendertigste Finales", qf: "Kwartfinales", sf: "Halve Finales",
+    third: "Wedstrijd om 3e Plaats", final: "Finale", group: "Groep",
+    posGK: "Keeper", posDEF: "Verdediger", posMID: "Middenvelder", posFWD: "Aanvaller",
+    standingMP: "W", standingW: "W", standingD: "G", standingL: "V",
+    standingGF: "Voor", standingGA: "Tegen", standingGD: "Verschil", standingPts: "Pnt",
+    lineupShow: "Opstelling", lineupHide: "Verberg Opstelling",
+    noSquadData: "Selectiegegevens niet beschikbaar voor dit team.",
+    noSquadDataShort: "Geen selectiegegevens",
+    startingXI: "Basiself", substitutes: "Wisselspelers",
+    goalkeepers: "Keepers", defenders: "Verdedigers", midfielders: "Middenvelders", forwards: "Aanvallers",
+    noMatchFound: "Geen wedstrijden gevonden.", noMatchesToday: "Geen wedstrijden gepland voor vandaag.",
+    donate: "Doneren", donate_title: "Trakteer Me op een Koffie",
+    donate_subtitle: "Als deze extensie nuttig is, overweeg de ontwikkeling te steunen!", copied: "Gekopieerd!",
+    labelWinner: "Winnaar Wedstrijd", labelLoser: "Verliezer Wedstrijd", labelRunnerUp: "Tweede van Groep", labelWinnerGroup: "Winnaar Groep", labelThirdGroup: "3e van Groep"
+  },
+  ko: {
+    title: "월드컵 2026", live: "실시간", fixtures: "일정", standings: "순위표", bracket: "대진표",
+    simOn: "시뮬 중지", simOff: "시뮬레이션", today: "오늘", byDate: "날짜별", knockouts: "토너먼트",
+    allGroups: "전체 조", loading: "데이터 로딩...", noLive: "현재 실시간 경기가 없습니다.",
+    searchPlaceholder: "선수 검색...", thNum: "#", thPlayer: "선수", thPos: "포지션",
+    statusLive: "실시간 시뮬레이션", statusAPI: "API 연결됨",
+    statusOffline: "오프라인 모드 (로컬 데이터)", simTooltip: "실시간 시뮬레이션 켜기/끄기",
+    elapsed: "분", cards: "카드", matchNotStarted: "未시작", matchFinished: "종료",
+    r16: "16강", r32: "32강", qf: "8강", sf: "준결승",
+    third: "3위 결정전", final: "결승", group: "조",
+    posGK: "골키퍼", posDEF: "수비수", posMID: "미드필더", posFWD: "공격수",
+    standingMP: "경", standingW: "승", standingD: "무", standingL: "패",
+    standingGF: "득", standingGA: "실", standingGD: "득실", standingPts: "승점",
+    lineupShow: "라인업 보기", lineupHide: "라인업 숨기기",
+    noSquadData: "이 팀의 스쿼드 데이터를 사용할 수 없습니다.",
+    noSquadDataShort: "스쿼드 데이터 없음",
+    startingXI: "선발 라인업", substitutes: "교체 선수",
+    goalkeepers: "골키퍼", defenders: "수비수", midfielders: "미드필더", forwards: "공격수",
+    noMatchFound: "경기를 찾을 수 없습니다.", noMatchesToday: "오늘 예정된 경기가 없습니다.",
+    donate: "후원", donate_title: "커피 사주세요",
+    donate_subtitle: "이 확장 프로그램이 유용하다면 개발을 지원해 주세요!", copied: "복사됨!",
+    labelWinner: "승리 팀", labelLoser: "패배 팀", labelRunnerUp: "조 2위", labelWinnerGroup: "조 1위", labelThirdGroup: "조 3위"
+  },
+  ja: {
+    title: "W杯 2026", live: "ライブ", fixtures: "試合日程", standings: "順位表", bracket: "トーナメント",
+    simOn: "シミュ停止", simOff: "シミュレーション", today: "今日", byDate: "日付別", knockouts: "ノックアウト",
+    allGroups: "全グループ", loading: "データ読み込み中...", noLive: "現在ライブ試合はありません。",
+    searchPlaceholder: "選手検索...", thNum: "#", thPlayer: "選手", thPos: "ポジション",
+    statusLive: "ライブシミュレーション中", statusAPI: "API接続済み",
+    statusOffline: "オフラインモード（ローカルデータ）", simTooltip: "ライブシミュレーション切替",
+    elapsed: "分", cards: "カード", matchNotStarted: "未開始", matchFinished: "終了",
+    r16: "決勝トーナメント16", r32: "決勝トーナメント32", qf: "準々決勝", sf: "準決勝",
+    third: "3位決定戦", final: "決勝", group: "グループ",
+    posGK: "ゴールキーパー", posDEF: "ディフェンダー", posMID: "ミッドフィルダー", posFWD: "フォワード",
+    standingMP: "試", standingW: "勝", standingD: "引", standingL: "敗",
+    standingGF: "得", standingGA: "失", standingGD: "差", standingPts: "勝点",
+    lineupShow: "フォーメーション表示", lineupHide: "フォーメーション非表示",
+    noSquadData: "このチームのスコアデータはありません。",
+    noSquadDataShort: "スコアデータなし",
+    startingXI: "スターティングイレブン", substitutes: "サブメンバー",
+    goalkeepers: "ゴールキーパー", defenders: "ディフェンダー", midfielders: "ミッドフィルダー", forwards: "フォワード",
+    noMatchFound: "試合が見つかりません。", noMatchesToday: "今日の試合は予定されていません。",
+    donate: "寄付", donate_title: "コーヒーをご馳走してください",
+    donate_subtitle: "この拡張機能が有用なら、開発支援をご検討ください！", copied: "コピー済み！",
+    labelWinner: "勝者", labelLoser: "敗者", labelRunnerUp: "グループ2位", labelWinnerGroup: "グループ1位", labelThirdGroup: "グループ3位"
+  },
+  fa: {
+    title: "جام جهانی 2026", live: "زنده", fixtures: "بازی‌ها", standings: "جدول رده‌بندی", bracket: "جدول حذفی",
+    simOn: "توقف شبیه‌سازی", simOff: "شبیه‌سازی", today: "امروز", byDate: "بر اساس تاریخ", knockouts: "حذفی",
+    allGroups: "همه گروه‌ها", loading: "بارگذاری داده‌ها...", noLive: "اکنون بازی زنده‌ای وجود ندارد.",
+    searchPlaceholder: "جستجوی بازیکنان...", thNum: "#", thPlayer: "بازیکن", thPos: "پست",
+    statusLive: "شبیه‌سازی زنده", statusAPI: "اتصال به API",
+    statusOffline: "حالت آفلاین (داده‌های محلی)", simTooltip: "شبیه‌سازی زنده را روشن/خاموش کنید",
+    elapsed: "دقیقه", cards: "کارت‌ها", matchNotStarted: "شروع نشده", matchFinished: "پایان یافته",
+    r16: "یک‌هشتم نهایی", r32: "یک‌شانزدهم نهایی", qf: "یک‌چهارم نهایی", sf: "نیمه‌نهایی",
+    third: "رده‌بندی", final: "نهایی", group: "گروه",
+    posGK: "دروازه‌بان", posDEF: "مدافع", posMID: "هافبک", posFWD: "مهاجم",
+    standingMP: "بازی", standingW: "برد", standingD: "تساوی", standingL: "باخت",
+    standingGF: "زده", standingGA: "خورده", standingGD: "تفاضل", standingPts: "امتیاز",
+    lineupShow: "ترکیب را نشان بده", lineupHide: "ترکیب را پنهان کن",
+    noSquadData: "داده ترکیب برای این تیم موجود نیست.",
+    noSquadDataShort: "داده ترکیب موجود نیست",
+    startingXI: "ترکیب اصلی", substitutes: "ذخیره‌ها",
+    goalkeepers: "دروازه‌بانان", defenders: "مدافعان", midfielders: "هافبک‌ها", forwards: "مهاجمان",
+    noMatchFound: "بازی‌ای یافت نشد.", noMatchesToday: "بازی برای امروز برنامه‌ریزی نشده.",
+    donate: "کمک مالی", donate_title: "یک قهوه برایم بخرید",
+    donate_subtitle: "اگر این افزونه برایتان مفید است، از توسعه آن حمایت کنید!", copied: "کپی شد!",
+    labelWinner: "برنده بازی", labelLoser: "بازنده بازی", labelRunnerUp: "دوم گروه", labelWinnerGroup: "اول گروه", labelThirdGroup: "سوم گروه"
+  },
+  hi: {
+    title: "विश्व कप 2026", live: "लाइव", fixtures: "मैच", standings: "तालिका", bracket: "नॉकआउट",
+    simOn: "सिम बंद करें", simOff: "सिमुलेशन", today: "आज", byDate: "तिथि के अनुसार", knockouts: "नॉकआउट",
+    allGroups: "सभी समूह", loading: "डेटा लोड हो रहा है...", noLive: "अभी कोई लाइव मैच नहीं।",
+    searchPlaceholder: "खिलाड़ी खोजें...", thNum: "#", thPlayer: "खिलाड़ी", thPos: "स्थान",
+    statusLive: "लाइव सिमुलेशन", statusAPI: "API से जुड़ा",
+    statusOffline: "ऑफलाइन मोड (स्थानीय डेटा)", simTooltip: "लाइव सिमुलेशन चालू/बंद करें",
+    elapsed: "मिनट", cards: "कार्ड", matchNotStarted: "शुरू नहीं हुआ", matchFinished: "समाप्त",
+    r16: "16वें दौर", r32: "32वें दौर", qf: "क्वार्टर फाइनल", sf: "सेमीफाइनल",
+    third: "तीसरा स्थान", final: "फाइनल", group: "समूह",
+    posGK: "गोलकीपर", posDEF: "डिफेंडर", posMID: "मिडफील्डर", posFWD: "फॉरवर्ड",
+    standingMP: "खे", standingW: "जीत", standingD: "ड्रॉ", standingL: "हार",
+    standingGF: "किए", standingGA: "खाए", standingGD: "अंतर", standingPts: "अंक",
+    lineupShow: "लाइनअप दिखाएं", lineupHide: "लाइनअप छुपाएं",
+    noSquadData: "इस टीम का स्क्वाड डेटा उपलब्ध नहीं है।",
+    noSquadDataShort: "स्क्वाड डेटा उपलब्ध नहीं",
+    startingXI: "स्टार्टिंग इलेवन", substitutes: "रिजर्व",
+    goalkeepers: "गोलकीपर", defenders: "डिफेंडर", midfielders: "मिडफील्डर", forwards: "फॉरवर्ड",
+    noMatchFound: "कोई मैच नहीं मिला।", noMatchesToday: "आज कोई मैच निर्धारित नहीं।",
+    donate: "दान", donate_title: "मुझे कॉफी पिलाएं",
+    donate_subtitle: "यदि यह एक्सटेंशन उपयोगी है, तो विकास का समर्थन करें!", copied: "कॉपी हो गया!",
+    labelWinner: "विजेता", labelLoser: "हारने वाला", labelRunnerUp: "समूह दूसरा", labelWinnerGroup: "समूह विजेता", labelThirdGroup: "समूह तीसरा"
+  },
+  id: {
+    title: "Piala Dunia 2026", live: "Langsung", fixtures: "Jadwal", standings: "Klasemen", bracket: "Babak Gugur",
+    simOn: "Hentikan Sim", simOff: "Simulasi", today: "Hari Ini", byDate: "Berdasarkan Tanggal", knockouts: "Eliminasi",
+    allGroups: "Semua Grup", loading: "Memuat data...", noLive: "Tidak ada pertandingan langsung saat ini.",
+    searchPlaceholder: "Cari pemain...", thNum: "#", thPlayer: "Pemain", thPos: "Posisi",
+    statusLive: "Simulasi Langsung", statusAPI: "Terhubung ke API",
+    statusOffline: "Mode Offline (Data Lokal)", simTooltip: "Aktifkan/Nonaktifkan Simulasi Langsung",
+    elapsed: "Mnt", cards: "Kartu", matchNotStarted: "Belum Dimulai", matchFinished: "Selesai",
+    r16: "Babak 16 Besar", r32: "Babak 32 Besar", qf: "Perempat Final", sf: "Semi Final",
+    third: "Perebutan Juara 3", final: "Final", group: "Grup",
+    posGK: "Penjaga Gawang", posDEF: "Bek", posMID: "Gelandang", posFWD: "Penyerang",
+    standingMP: "M", standingW: "M", standingD: "S", standingL: "K",
+    standingGF: "GM", standingGA: "GK", standingGD: "SG", standingPts: "Poin",
+    lineupShow: "Tampilkan Formasi", lineupHide: "Sembunyikan Formasi",
+    noSquadData: "Data skuad tidak tersedia untuk tim ini.",
+    noSquadDataShort: "Data skuad tidak tersedia",
+    startingXI: "Pemain Inti", substitutes: "Pemain Cadangan",
+    goalkeepers: "Penjaga Gawang", defenders: "Bek", midfielders: "Gelandang", forwards: "Penyerang",
+    noMatchFound: "Tidak ada pertandingan ditemukan.", noMatchesToday: "Tidak ada pertandingan hari ini.",
+    donate: "Donasi", donate_title: "Traktir Saya Kopi",
+    donate_subtitle: "Jika ekstensi ini bermanfaat, pertimbangkan untuk mendukung pengembangan!", copied: "Disalin!",
+    labelWinner: "Pemenang", labelLoser: "Kalah", labelRunnerUp: "Juara 2 Grup", labelWinnerGroup: "Juara Grup", labelThirdGroup: "Juara 3 Grup"
+  },
+  pl: {
+    title: "Mistrzostwa Świata 2026", live: "Na Żywo", fixtures: "Terminarz", standings: "Tabela", bracket: "Drabinka",
+    simOn: "Zatrzymaj Sym", simOff: "Symuluj", today: "Dziś", byDate: "Wg Daty", knockouts: "Pucharowa",
+    allGroups: "Wszystkie Grupy", loading: "Ładowanie danych...", noLive: "Brak meczów na żywo.",
+    searchPlaceholder: "Szukaj zawodników...", thNum: "#", thPlayer: "Zawodnik", thPos: "Pozycja",
+    statusLive: "Symulacja Na Żywo", statusAPI: "Połączono z API",
+    statusOffline: "Tryb Offline (Dane Lokalne)", simTooltip: "Przełącz Symulację Na Żywo",
+    elapsed: "Min", cards: "Kartki", matchNotStarted: "Nie Rozpoczęty", matchFinished: "Zakończony",
+    r16: "1/8 Finału", r32: "1/16 Finału", qf: "Ćwierćfinały", sf: "Półfinały",
+    third: "Mecz o 3. Miejsce", final: "Finał", group: "Grupa",
+    posGK: "Bramkarz", posDEF: "Obrońca", posMID: "Pomocnik", posFWD: "Napastnik",
+    standingMP: "M", standingW: "W", standingD: "R", standingL: "P",
+    standingGF: "BZ", standingGA: "BS", standingGD: "RB", standingPts: "Pkt",
+    lineupShow: "Pokaż Skład", lineupHide: "Ukryj Skład",
+    noSquadData: "Dane składu niedostępne dla tej drużyny.",
+    noSquadDataShort: "Brak danych składu",
+    startingXI: "Podstawowy Skład", substitutes: "Rezerwowi",
+    goalkeepers: "Bramkarze", defenders: "Obrońcy", midfielders: "Pomocnicy", forwards: "Napastnicy",
+    noMatchFound: "Nie znaleziono meczów.", noMatchesToday: "Brak zaplanowanych meczów na dziś.",
+    donate: "Wpłać", donate_title: "Postaw Mi Kawę",
+    donate_subtitle: "Jeśli to rozszerzenie jest przydatne, rozważ wsparcie rozwoju!", copied: "Skopiowano!",
+    labelWinner: "Wygrany Meczu", labelLoser: "Przegrany Meczu", labelRunnerUp: "2. Miejsce w Grupie", labelWinnerGroup: "1. Miejsce w Grupie", labelThirdGroup: "3. Miejsce w Grupie"
   }
 };
 
-const teamNameTR = {
-  "Mexico": "Meksika", "South Africa": "Güney Afrika", "South Korea": "Güney Kore",
-  "Czech Republic": "Çekya", "Canada": "Kanada", "Bosnia and Herzegovina": "Bosna Hersek",
-  "Qatar": "Katar", "Switzerland": "İsviçre", "Brazil": "Brezilya", "Morocco": "Fas",
-  "Haiti": "Haiti", "Scotland": "İskoçya", "United States": "ABD", "Paraguay": "Paraguay",
-  "Australia": "Avustralya", "Turkey": "Türkiye", "Germany": "Almanya", "Curaçao": "Curaçao",
-  "Ivory Coast": "Fildişi Sahili", "Ecuador": "Ekvador", "Netherlands": "Hollanda",
-  "Japan": "Japonya", "Sweden": "İsveç", "Tunisia": "Tunus", "Belgium": "Belçika",
-  "Egypt": "Mısır", "Iran": "İran", "New Zealand": "Yeni Zelanda", "Spain": "İspanya",
-  "Cape Verde": "Cabo Verde", "Saudi Arabia": "Suudi Arabistan", "Uruguay": "Uruguay",
-  "France": "Fransa", "Senegal": "Senegal", "Iraq": "Irak", "Norway": "Norveç",
-  "Argentina": "Arjantin", "Algeria": "Cezayir", "Austria": "Avusturya", "Jordan": "Ürdün",
-  "Portugal": "Portekiz", "Democratic Republic of the Congo": "Kongo Demokratik Cumhuriyeti",
-  "Uzbekistan": "Özbekistan", "Colombia": "Kolombiya", "England": "İngiltere",
-  "Croatia": "Hırvatistan", "Ghana": "Gana", "Panama": "Panama"
+const teamNames = {
+  en: {
+    "Mexico": "Mexico", "South Africa": "South Africa", "South Korea": "South Korea",
+    "Czech Republic": "Czech Republic", "Canada": "Canada", "Bosnia and Herzegovina": "Bosnia and Herzegovina",
+    "Qatar": "Qatar", "Switzerland": "Switzerland", "Brazil": "Brazil", "Morocco": "Morocco",
+    "Haiti": "Haiti", "Scotland": "Scotland", "United States": "United States", "Paraguay": "Paraguay",
+    "Australia": "Australia", "Turkey": "Turkey", "Germany": "Germany", "Curaçao": "Curaçao",
+    "Ivory Coast": "Ivory Coast", "Ecuador": "Ecuador", "Netherlands": "Netherlands",
+    "Japan": "Japan", "Sweden": "Sweden", "Tunisia": "Tunisia", "Belgium": "Belgium",
+    "Egypt": "Egypt", "Iran": "Iran", "New Zealand": "New Zealand", "Spain": "Spain",
+    "Cape Verde": "Cape Verde", "Saudi Arabia": "Saudi Arabia", "Uruguay": "Uruguay",
+    "France": "France", "Senegal": "Senegal", "Iraq": "Iraq", "Norway": "Norway",
+    "Argentina": "Argentina", "Algeria": "Algeria", "Austria": "Austria", "Jordan": "Jordan",
+    "Portugal": "Portugal", "Democratic Republic of the Congo": "DR Congo",
+    "Uzbekistan": "Uzbekistan", "Colombia": "Colombia", "England": "England",
+    "Croatia": "Croatia", "Ghana": "Ghana", "Panama": "Panama"
+  },
+  tr: {
+    "Mexico": "Meksika", "South Africa": "Güney Afrika", "South Korea": "Güney Kore",
+    "Czech Republic": "Çekya", "Canada": "Kanada", "Bosnia and Herzegovina": "Bosna Hersek",
+    "Qatar": "Katar", "Switzerland": "İsviçre", "Brazil": "Brezilya", "Morocco": "Fas",
+    "Haiti": "Haiti", "Scotland": "İskoçya", "United States": "ABD", "Paraguay": "Paraguay",
+    "Australia": "Avustralya", "Turkey": "Türkiye", "Germany": "Almanya", "Curaçao": "Curaçao",
+    "Ivory Coast": "Fildişi Sahili", "Ecuador": "Ekvador", "Netherlands": "Hollanda",
+    "Japan": "Japonya", "Sweden": "İsveç", "Tunisia": "Tunus", "Belgium": "Belçika",
+    "Egypt": "Mısır", "Iran": "İran", "New Zealand": "Yeni Zelanda", "Spain": "İspanya",
+    "Cape Verde": "Cabo Verde", "Saudi Arabia": "Suudi Arabistan", "Uruguay": "Uruguay",
+    "France": "Fransa", "Senegal": "Senegal", "Iraq": "Irak", "Norway": "Norveç",
+    "Argentina": "Arjantin", "Algeria": "Cezayir", "Austria": "Avusturya", "Jordan": "Ürdün",
+    "Portugal": "Portekiz", "Democratic Republic of the Congo": "Kongo Demokratik Cumhuriyeti",
+    "Uzbekistan": "Özbekistan", "Colombia": "Kolombiya", "England": "İngiltere",
+    "Croatia": "Hırvatistan", "Ghana": "Gana", "Panama": "Panama"
+  },
+  es: {
+    "Mexico": "México", "South Africa": "Sudáfrica", "South Korea": "Corea del Sur",
+    "Czech Republic": "Chequia", "Canada": "Canadá", "Bosnia and Herzegovina": "Bosnia y Herzegovina",
+    "Qatar": "Catar", "Switzerland": "Suiza", "Brazil": "Brasil", "Morocco": "Marruecos",
+    "Haiti": "Haití", "Scotland": "Escocia", "United States": "Estados Unidos", "Paraguay": "Paraguay",
+    "Australia": "Australia", "Turkey": "Turquía", "Germany": "Alemania", "Curaçao": "Curaçao",
+    "Ivory Coast": "Costa de Marfil", "Ecuador": "Ecuador", "Netherlands": "Países Bajos",
+    "Japan": "Japón", "Sweden": "Suecia", "Tunisia": "Túnez", "Belgium": "Bélgica",
+    "Egypt": "Egipto", "Iran": "Irán", "New Zealand": "Nueva Zelanda", "Spain": "España",
+    "Cape Verde": "Cabo Verde", "Saudi Arabia": "Arabia Saudita", "Uruguay": "Uruguay",
+    "France": "Francia", "Senegal": "Senegal", "Iraq": "Irak", "Norway": "Noruega",
+    "Argentina": "Argentina", "Algeria": "Argelia", "Austria": "Austria", "Jordan": "Jordania",
+    "Portugal": "Portugal", "Democratic Republic of the Congo": "RD del Congo",
+    "Uzbekistan": "Uzbekistán", "Colombia": "Colombia", "England": "Inglaterra",
+    "Croatia": "Croacia", "Ghana": "Ghana", "Panama": "Panamá"
+  },
+  pt: {
+    "Mexico": "México", "South Africa": "África do Sul", "South Korea": "Coreia do Sul",
+    "Czech Republic": "Tchéquia", "Canada": "Canadá", "Bosnia and Herzegovina": "Bósnia e Herzegovina",
+    "Qatar": "Catar", "Switzerland": "Suíça", "Brazil": "Brasil", "Morocco": "Marrocos",
+    "Haiti": "Haiti", "Scotland": "Escócia", "United States": "Estados Unidos", "Paraguay": "Paraguai",
+    "Australia": "Austrália", "Turkey": "Turquia", "Germany": "Alemanha", "Curaçao": "Curaçao",
+    "Ivory Coast": "Costa do Marfim", "Ecuador": "Equador", "Netherlands": "Países Baixos",
+    "Japan": "Japão", "Sweden": "Suécia", "Tunisia": "Tunísia", "Belgium": "Bélgica",
+    "Egypt": "Egito", "Iran": "Irã", "New Zealand": "Nova Zelândia", "Spain": "Espanha",
+    "Cape Verde": "Cabo Verde", "Saudi Arabia": "Arábia Saudita", "Uruguay": "Uruguai",
+    "France": "França", "Senegal": "Senegal", "Iraq": "Iraque", "Norway": "Noruega",
+    "Argentina": "Argentina", "Algeria": "Argélia", "Austria": "Áustria", "Jordan": "Jordânia",
+    "Portugal": "Portugal", "Democratic Republic of the Congo": "RD do Congo",
+    "Uzbekistan": "Uzbequistão", "Colombia": "Colômbia", "England": "Inglaterra",
+    "Croatia": "Croácia", "Ghana": "Gana", "Panama": "Panamá"
+  },
+  fr: {
+    "Mexico": "Mexique", "South Africa": "Afrique du Sud", "South Korea": "Corée du Sud",
+    "Czech Republic": "Tchéquie", "Canada": "Canada", "Bosnia and Herzegovina": "Bosnie-Herzégovine",
+    "Qatar": "Qatar", "Switzerland": "Suisse", "Brazil": "Brésil", "Morocco": "Maroc",
+    "Haiti": "Haïti", "Scotland": "Écosse", "United States": "États-Unis", "Paraguay": "Paraguay",
+    "Australia": "Australie", "Turkey": "Turquie", "Germany": "Allemagne", "Curaçao": "Curaçao",
+    "Ivory Coast": "Côte d'Ivoire", "Ecuador": "Équateur", "Netherlands": "Pays-Bas",
+    "Japan": "Japon", "Sweden": "Suède", "Tunisia": "Tunisie", "Belgium": "Belgique",
+    "Egypt": "Égypte", "Iran": "Iran", "New Zealand": "Nouvelle-Zélande", "Spain": "Espagne",
+    "Cape Verde": "Cap-Vert", "Saudi Arabia": "Arabie Saoudite", "Uruguay": "Uruguay",
+    "France": "France", "Senegal": "Sénégal", "Iraq": "Irak", "Norway": "Norvège",
+    "Argentina": "Argentine", "Algeria": "Algérie", "Austria": "Autriche", "Jordan": "Jordanie",
+    "Portugal": "Portugal", "Democratic Republic of the Congo": "RD Congo",
+    "Uzbekistan": "Ouzbékistan", "Colombia": "Colombie", "England": "Angleterre",
+    "Croatia": "Croatie", "Ghana": "Ghana", "Panama": "Panama"
+  },
+  de: {
+    "Mexico": "Mexiko", "South Africa": "Südafrika", "South Korea": "Südkorea",
+    "Czech Republic": "Tschechien", "Canada": "Kanada", "Bosnia and Herzegovina": "Bosnien und Herzegowina",
+    "Qatar": "Katar", "Switzerland": "Schweiz", "Brazil": "Brasilien", "Morocco": "Marokko",
+    "Haiti": "Haiti", "Scotland": "Schottland", "United States": "USA", "Paraguay": "Paraguay",
+    "Australia": "Australien", "Turkey": "Türkei", "Germany": "Deutschland", "Curaçao": "Curaçao",
+    "Ivory Coast": "Elfenbeinküste", "Ecuador": "Ecuador", "Netherlands": "Niederlande",
+    "Japan": "Japan", "Sweden": "Schweden", "Tunisia": "Tunesien", "Belgium": "Belgien",
+    "Egypt": "Ägypten", "Iran": "Iran", "New Zealand": "Neuseeland", "Spain": "Spanien",
+    "Cape Verde": "Kap Verde", "Saudi Arabia": "Saudi-Arabien", "Uruguay": "Uruguay",
+    "France": "Frankreich", "Senegal": "Senegal", "Iraq": "Irak", "Norway": "Norwegen",
+    "Argentina": "Argentinien", "Algeria": "Algerien", "Austria": "Österreich", "Jordan": "Jordanien",
+    "Portugal": "Portugal", "Democratic Republic of the Congo": "DR Kongo",
+    "Uzbekistan": "Usbekistan", "Colombia": "Kolumbien", "England": "England",
+    "Croatia": "Kroatien", "Ghana": "Ghana", "Panama": "Panama"
+  },
+  ar: {
+    "Mexico": "المكسيك", "South Africa": "جنوب أفريقيا", "South Korea": "كوريا الجنوبية",
+    "Czech Republic": "التشيك", "Canada": "كندا", "Bosnia and Herzegovina": "البوسنة والهرسك",
+    "Qatar": "قطر", "Switzerland": "سويسرا", "Brazil": "البرازيل", "Morocco": "المغرب",
+    "Haiti": "هايتي", "Scotland": "اسكتلندا", "United States": "الولايات المتحدة", "Paraguay": "باراغواي",
+    "Australia": "أستراليا", "Turkey": "تركيا", "Germany": "ألمانيا", "Curaçao": "كوراساو",
+    "Ivory Coast": "ساحل العاج", "Ecuador": "الإكوادور", "Netherlands": "هولندا",
+    "Japan": "اليابان", "Sweden": "السويد", "Tunisia": "تونس", "Belgium": "بلجيكا",
+    "Egypt": "مصر", "Iran": "إيران", "New Zealand": "نيوزيلندا", "Spain": "إسبانيا",
+    "Cape Verde": "الرأس الأخضر", "Saudi Arabia": "المملكة العربية السعودية", "Uruguay": "أوروغواي",
+    "France": "فرنسا", "Senegal": "السنغال", "Iraq": "العراق", "Norway": "النرويج",
+    "Argentina": "الأرجنتين", "Algeria": "الجزائر", "Austria": "النمسا", "Jordan": "الأردن",
+    "Portugal": "البرتغال", "Democratic Republic of the Congo": "جمهورية الكونغو الديمقراطية",
+    "Uzbekistan": "أوزبكستان", "Colombia": "كولومبيا", "England": "إنجلترا",
+    "Croatia": "كرواتيا", "Ghana": "غانا", "Panama": "بنما"
+  },
+  ru: {
+    "Mexico": "Мексика", "South Africa": "ЮАР", "South Korea": "Южная Корея",
+    "Czech Republic": "Чехия", "Canada": "Канада", "Bosnia and Herzegovina": "Босния и Герцеговина",
+    "Qatar": "Катар", "Switzerland": "Швейцария", "Brazil": "Бразилия", "Morocco": "Марокко",
+    "Haiti": "Гаити", "Scotland": "Шотландия", "United States": "США", "Paraguay": "Парагвай",
+    "Australia": "Австралия", "Turkey": "Турция", "Germany": "Германия", "Curaçao": "Кюрасао",
+    "Ivory Coast": "Кот-д'Ивуар", "Ecuador": "Эквадор", "Netherlands": "Нидерланды",
+    "Japan": "Япония", "Sweden": "Швеция", "Tunisia": "Тунис", "Belgium": "Бельгия",
+    "Egypt": "Египет", "Iran": "Иран", "New Zealand": "Новая Зеландия", "Spain": "Испания",
+    "Cape Verde": "Кабо-Верде", "Saudi Arabia": "Саудовская Аравия", "Uruguay": "Уругвай",
+    "France": "Франция", "Senegal": "Сенегал", "Iraq": "Ирак", "Norway": "Норвегия",
+    "Argentina": "Аргентина", "Algeria": "Алжир", "Austria": "Австрия", "Jordan": "Иордания",
+    "Portugal": "Португалия", "Democratic Republic of the Congo": "ДР Конго",
+    "Uzbekistan": "Узбекистан", "Colombia": "Колумбия", "England": "Англия",
+    "Croatia": "Хорватия", "Ghana": "Гана", "Panama": "Панама"
+  },
+  it: {
+    "Mexico": "Messico", "South Africa": "Sudafrica", "South Korea": "Corea del Sud",
+    "Czech Republic": "Cechia", "Canada": "Canada", "Bosnia and Herzegovina": "Bosnia ed Erzegovina",
+    "Qatar": "Qatar", "Switzerland": "Svizzera", "Brazil": "Brasile", "Morocco": "Marocco",
+    "Haiti": "Haiti", "Scotland": "Scozia", "United States": "Stati Uniti", "Paraguay": "Paraguay",
+    "Australia": "Australia", "Turkey": "Turchia", "Germany": "Germania", "Curaçao": "Curaçao",
+    "Ivory Coast": "Costa d'Avorio", "Ecuador": "Ecuador", "Netherlands": "Paesi Bassi",
+    "Japan": "Giappone", "Sweden": "Svezia", "Tunisia": "Tunisia", "Belgium": "Belgio",
+    "Egypt": "Egitto", "Iran": "Iran", "New Zealand": "Nuova Zelanda", "Spain": "Spagna",
+    "Cape Verde": "Capo Verde", "Saudi Arabia": "Arabia Saudita", "Uruguay": "Uruguay",
+    "France": "Francia", "Senegal": "Senegal", "Iraq": "Iraq", "Norway": "Norvegia",
+    "Argentina": "Argentina", "Algeria": "Algeria", "Austria": "Austria", "Jordan": "Giordania",
+    "Portugal": "Portogallo", "Democratic Republic of the Congo": "RD Congo",
+    "Uzbekistan": "Uzbekistan", "Colombia": "Colombia", "England": "Inghilterra",
+    "Croatia": "Croazia", "Ghana": "Ghana", "Panama": "Panama"
+  },
+  nl: {
+    "Mexico": "Mexico", "South Africa": "Zuid-Afrika", "South Korea": "Zuid-Korea",
+    "Czech Republic": "Tsjechië", "Canada": "Canada", "Bosnia and Herzegovina": "Bosnië en Herzegovina",
+    "Qatar": "Qatar", "Switzerland": "Zwitserland", "Brazil": "Brazilië", "Morocco": "Marokko",
+    "Haiti": "Haïti", "Scotland": "Schotland", "United States": "Verenigde Staten", "Paraguay": "Paraguay",
+    "Australia": "Australië", "Turkey": "Turkije", "Germany": "Duitsland", "Curaçao": "Curaçao",
+    "Ivory Coast": "Ivoorkust", "Ecuador": "Ecuador", "Netherlands": "Nederland",
+    "Japan": "Japan", "Sweden": "Zweden", "Tunisia": "Tunesië", "Belgium": "België",
+    "Egypt": "Egypte", "Iran": "Iran", "New Zealand": "Nieuw-Zeeland", "Spanje": "Spanje",
+    "Cape Verde": "Kaapverdië", "Saudi Arabia": "Saoedi-Arabië", "Uruguay": "Uruguay",
+    "France": "Frankrijk", "Senegal": "Senegal", "Iraq": "Irak", "Norway": "Noorwegen",
+    "Argentina": "Argentinië", "Algeria": "Algerije", "Austria": "Oostenrijk", "Jordan": "Jordanië",
+    "Portugal": "Portugal", "Democratic Republic of the Congo": "DR Congo",
+    "Uzbekistan": "Oezbekistan", "Colombia": "Colombia", "England": "Engeland",
+    "Croatia": "Kroatië", "Ghana": "Ghana", "Panama": "Panama"
+  },
+  ko: {
+    "Mexico": "멕시코", "South Africa": "남아프리카 공화국", "South Korea": "대한민국",
+    "Czech Republic": "체코", "Canada": "캐나다", "Bosnia and Herzegovina": "보스니아 헤르체고비나",
+    "Qatar": "카타르", "Switzerland": "스위스", "Brazil": "브라질", "Morocco": "모로코",
+    "Haiti": "아이티", "Scotland": "스코틀랜드", "United States": "미국", "Paraguay": "파라과이",
+    "Australia": "호주", "Turkey": "튀르키예", "Germany": "독일", "Curaçao": "퀴라소",
+    "Ivory Coast": "코트디부아르", "Ecuador": "에콰도르", "Netherlands": "네덜란드",
+    "Japan": "일본", "Sweden": "스웨덴", "Tunisia": "튀니지", "Belgium": "벨기에",
+    "Egypt": "이집트", "Iran": "이란", "New Zealand": "뉴질랜드", "Spain": "스페인",
+    "Cape Verde": "카보베르데", "Saudi Arabia": "사우디아라비아", "Uruguay": "우루과이",
+    "France": "프랑스", "Senegal": "세네갈", "Iraq": "이라크", "Norway": "노르웨이",
+    "Argentina": "아르헨티나", "Algeria": "알제리", "Austria": "오스트리아", "Jordan": "요르단",
+    "Portugal": "포르투갈", "Democratic Republic of the Congo": "콩고 민주 공화국",
+    "Uzbekistan": "우즈베키스탄", "Colombia": "콜롬비아", "England": "잉글랜드",
+    "Croatia": "크로아티아", "Ghana": "가나", "Panama": "파나마"
+  },
+  ja: {
+    "Mexico": "メキシコ", "South Africa": "南アフリカ", "South Korea": "韓国",
+    "Czech Republic": "チェコ", "Canada": "カナダ", "Bosnia and Herzegovina": "ボスニア・ヘルツェゴビナ",
+    "Qatar": "カタール", "Switzerland": "スイス", "Brazil": "ブラジル", "Morocco": "モロッコ",
+    "Haiti": "ハイチ", "Scotland": "スコットランド", "United States": "アメリカ", "Paraguay": "パラグアイ",
+    "Australia": "オーストラリア", "Turkey": "トルコ", "Germany": "ドイツ", "Curaçao": "キュラソー",
+    "Ivory Coast": "コートジボワール", "Ecuador": "エクアドル", "Netherlands": "オランダ",
+    "Japan": "日本", "Sweden": "スウェーデン", "Tunisia": "チュニジア", "Belgium": "ベルギー",
+    "Egypt": "エジプト", "Iran": "イラン", "New Zealand": "ニュージーランド", "Spain": "スペイン",
+    "Cape Verde": "カーボベルデ", "Saudi Arabia": "サウジアラビア", "Uruguay": "ウルグアイ",
+    "France": "フランス", "Senegal": "セネガル", "Iraq": "イラク", "Norway": "ノルウェー",
+    "Argentina": "アルゼンチン", "Algeria": "アルジェリア", "Austria": "オーストリア", "Jordan": "ヨルダン",
+    "Portugal": "ポルトガル", "Democratic Republic of the Congo": "コンゴ民主共和国",
+    "Uzbekistan": "ウズベキスタン", "Colombia": "コロンビア", "England": "イングランド",
+    "Croatia": "クロアチア", "Ghana": "ガーナ", "Panama": "パナマ"
+  },
+  fa: {
+    "Mexico": "مکزیک", "South Africa": "آفریقای جنوبی", "South Korea": "کره جنوبی",
+    "Czech Republic": "چک", "Canada": "کانادا", "Bosnia and Herzegovina": "بوسنی و هرزگوین",
+    "Qatar": "قطر", "Switzerland": "سوئیس", "Brazil": "برزیل", "Morocco": "مراکش",
+    "Haiti": "هائیتی", "Scotland": "اسکاتلند", "United States": "آمریکا", "Paraguay": "پاراگوئه",
+    "Australia": "استرالیا", "Turkey": "ترکیه", "Germany": "آلمان", "Curaçao": "کوراسائو",
+    "Ivory Coast": "ساحل عاج", "Ecuador": "اکوادور", "Netherlands": "هلند",
+    "Japan": "ژاپن", "Sweden": "سوئد", "Tunisia": "تونس", "Belgium": "بلژیک",
+    "Egypt": "مصر", "Iran": "ایران", "New Zealand": "نیوزیلند", "Spain": "اسپانیا",
+    "Cape Verde": "کابو ورده", "Saudi Arabia": "عربستان سعودی", "Uruguay": "اروگوئه",
+    "France": "فرانسه", "Senegal": "سنگال", "Iraq": "عراق", "Norway": "نروژ",
+    "Argentina": "آرژانتین", "Algeria": "الجزایر", "Austria": "اتریش", "Jordan": "اردن",
+    "Portugal": "پرتغال", "Democratic Republic of the Congo": "کنگو شرقی",
+    "Uzbekistan": "ازبکستان", "Colombia": "کلمبیا", "England": "انگلیس",
+    "Croatia": "کرواسی", "Ghana": "غنا", "Panama": "پاناما"
+  },
+  hi: {
+    "Mexico": "मैक्सिको", "South Africa": "दक्षिण अफ्रीका", "South Korea": "दक्षिण कोरिया",
+    "Czech Republic": "चेक गणराज्य", "Canada": "कनाडा", "Bosnia and Herzegovina": "बोस्निया और हर्ज़ेगोविना",
+    "Qatar": "क़तर", "Switzerland": "स्विट्ज़रलैंड", "Brazil": "ब्राज़ील", "Morocco": "मोरक्को",
+    "Haiti": "हैती", "Scotland": "स्कॉटलैंड", "United States": "अमेरिका", "Paraguay": "पैराग्वे",
+    "Australia": "ऑस्ट्रेलिया", "Turkey": "तुर्की", "Germany": "जर्मनी", "Curaçao": "कुरासाओ",
+    "Ivory Coast": "कोत दिव्वार", "Ecuador": "इक्वाडोर", "Netherlands": "नीदरलैंड",
+    "Japan": "जापान", "Sweden": "स्वीडन", "Tunisia": "ट्यूनीशिया", "Belgium": "बेल्जियम",
+    "Egypt": "मिस्र", "Iran": "ईरान", "New Zealand": "न्यूज़ीलैंड", "Spain": "स्पेन",
+    "Cape Verde": "केप वर्डे", "Saudi Arabia": "सऊदी अरब", "Uruguay": "उरुग्वे",
+    "France": "फ्रांस", "Senegal": "सेनेगल", "Iraq": "इराक", "Norway": "नॉर्वे",
+    "Argentina": "अर्जेंटीना", "Algeria": "अल्जीरिया", "Austria": "ऑस्ट्रिया", "Jordan": "जॉर्डन",
+    "Portugal": "पुर्तगाल", "Democratic Republic of the Congo": "कांगो लोकतांत्रिक गणराज्य",
+    "Uzbekistan": "उज़्बेकिस्तान", "Colombia": "कोलंबिया", "England": "इंग्लैंड",
+    "Croatia": "क्रोएशिया", "Ghana": "घाना", "Panama": "पनामा"
+  },
+  id: {
+    "Mexico": "Meksiko", "South Africa": "Afrika Selatan", "South Korea": "Korea Selatan",
+    "Czech Republic": "Ceko", "Canada": "Kanada", "Bosnia and Herzegovina": "Bosnia dan Herzegovina",
+    "Qatar": "Qatar", "Switzerland": "Swiss", "Brazil": "Brasil", "Morocco": "Maroko",
+    "Haiti": "Haiti", "Scotland": "Skotlandia", "United States": "Amerika Serikat", "Paraguay": "Paraguay",
+    "Australia": "Australia", "Turkey": "Turki", "Germany": "Jerman", "Curaçao": "Curaçao",
+    "Ivory Coast": "Pantai Gading", "Ecuador": "Ekuador", "Netherlands": "Belanda",
+    "Japan": "Jepang", "Sweden": "Swedia", "Tunisia": "Tunisia", "Belgium": "Belgia",
+    "Egypt": "Mesir", "Iran": "Iran", "New Zealand": "Selandia Baru", "Spain": "Spanyol",
+    "Cape Verde": "Tanjung Verde", "Saudi Arabia": "Arab Saudi", "Uruguay": "Uruguay",
+    "France": "Prancis", "Senegal": "Senegal", "Iraq": "Irak", "Norway": "Norwegia",
+    "Argentina": "Argentina", "Algeria": "Aljazair", "Austria": "Austria", "Jordan": "Yordania",
+    "Portugal": "Portugal", "Democratic Republic of the Congo": "DR Kongo",
+    "Uzbekistan": "Uzbekistan", "Colombia": "Kolombia", "England": "Inggris",
+    "Croatia": "Kroasia", "Ghana": "Ghana", "Panama": "Panama"
+  },
+  pl: {
+    "Mexico": "Meksyk", "South Africa": "Republika Południowej Afryki", "South Korea": "Korea Południowa",
+    "Czech Republic": "Czechy", "Canada": "Kanada", "Bosnia and Herzegovina": "Bośnia i Hercegowina",
+    "Qatar": "Katar", "Switzerland": "Szwajcaria", "Brazil": "Brazylia", "Morocco": "Maroko",
+    "Haiti": "Haiti", "Scotland": "Szkocja", "United States": "Stany Zjednoczone", "Paraguay": "Paragwaj",
+    "Australia": "Australia", "Turkey": "Turcja", "Germany": "Niemcy", "Curaçao": "Curaçao",
+    "Ivory Coast": "Wybrzeże Kości Słoniowej", "Ecuador": "Ekwador", "Netherlands": "Holandia",
+    "Japan": "Japonia", "Sweden": "Szwecja", "Tunisia": "Tunezja", "Belgium": "Belgia",
+    "Egypt": "Egipt", "Iran": "Iran", "New Zealand": "Nowa Zelandia", "Spain": "Hiszpania",
+    "Cape Verde": "Republika Zielonego Przylądka", "Saudi Arabia": "Arabia Saudyjska", "Uruguay": "Urugwaj",
+    "France": "Francja", "Senegal": "Senegal", "Iraq": "Irak", "Norway": "Norwegia",
+    "Argentina": "Argentyna", "Algeria": "Algieria", "Austria": "Austria", "Jordan": "Jordania",
+    "Portugal": "Portugalia", "Democratic Republic of the Congo": "DR Konga",
+    "Uzbekistan": "Uzbekistan", "Colombia": "Kolumbia", "England": "Anglia",
+    "Croatia": "Chorwacja", "Ghana": "Ghana", "Panama": "Panama"
+  }
 };
 
 // Top players squad database for major countries
@@ -542,19 +1083,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 // --- Event Listeners Setup ---
 function setupEventListeners() {
-  // Language button
-  document.getElementById("lang-btn").addEventListener("click", () => {
-    state.lang = state.lang === "en" ? "tr" : "en";
-    
-    // Save preference
-    if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
-      chrome.storage.local.set({ lang: state.lang });
-    } else {
-      localStorage.setItem("wc_lang", state.lang);
-    }
-    
-    updateLanguageUI();
-    renderAll();
+  // Language dropdown
+  buildLangDropdown();
+  document.getElementById("lang-btn").addEventListener("click", (e) => {
+    e.stopPropagation();
+    document.getElementById("lang-dropdown").classList.toggle("open");
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener("click", () => {
+    document.getElementById("lang-dropdown").classList.remove("open");
   });
 
   // Main Tabs navigation
@@ -746,31 +1284,27 @@ function renderAll() {
 
 // Local helper to translate team names
 function getTeamName(game, side) {
-  const isEn = state.lang === "en";
+  const names = teamNames[state.lang] || teamNames.en;
   if (side === "home") {
     if (game.home_team_label && (!game.home_team_id || game.home_team_id === "0")) {
       return translateLabel(game.home_team_label);
     }
-    if (state.lang === "tr") return teamNameTR[game.home_team_name_en] || game.home_team_name_en || "TBD";
-    return game.home_team_name_en || "TBD";
+    return names[game.home_team_name_en] || game.home_team_name_en || "TBD";
   } else {
     if (game.away_team_label && (!game.away_team_id || game.away_team_id === "0")) {
       return translateLabel(game.away_team_label);
     }
-    if (state.lang === "tr") return teamNameTR[game.away_team_name_en] || game.away_team_name_en || "TBD";
-    return game.away_team_name_en || "TBD";
+    return names[game.away_team_name_en] || game.away_team_name_en || "TBD";
   }
 }
 
 function translateLabel(lbl) {
-  if (state.lang === "tr") {
-    return lbl
-      .replace("Winner Match", "Galip Maç")
-      .replace("Loser Match", "Mağlup Maç")
-      .replace("Runner-up Group", "Grup İkincisi")
-      .replace("Winner Group", "Grup Birincisi")
-      .replace("3rd Group", "Grup Üçüncüsü");
-  }
+  const dict = translations[state.lang];
+  if (dict.labelWinner && lbl.includes("Winner Match")) return lbl.replace("Winner Match", dict.labelWinner);
+  if (dict.labelLoser && lbl.includes("Loser Match")) return lbl.replace("Loser Match", dict.labelLoser);
+  if (dict.labelRunnerUp && lbl.includes("Runner-up Group")) return lbl.replace("Runner-up Group", dict.labelRunnerUp);
+  if (dict.labelWinnerGroup && lbl.includes("Winner Group")) return lbl.replace("Winner Group", dict.labelWinnerGroup);
+  if (dict.labelThirdGroup && lbl.includes("3rd Group")) return lbl.replace("3rd Group", dict.labelThirdGroup);
   return lbl;
 }
 
@@ -821,7 +1355,7 @@ function renderLive() {
 
     let lineupContainerHTML = "";
     if (game.home_team_id && game.home_team_id !== "0" && game.away_team_id && game.away_team_id !== "0") {
-      const lineupBtnText = state.lang === "tr" ? "Kadro Göster" : "Show Lineups";
+      const lineupBtnText = translations[state.lang].lineupShow;
       lineupContainerHTML = `
         <div class="lineup-toggle-container">
           <button id="lineup-btn-${game.id}" class="lineup-toggle-btn">▼ ${lineupBtnText}</button>
@@ -941,7 +1475,7 @@ function renderFixtures() {
   }
 
   if (filtered.length === 0) {
-    const emptyMsg = state.lang === "tr" ? "Bugün oynanacak maç bulunmuyor." : "No matches scheduled for today.";
+    const emptyMsg = translations[state.lang].noMatchesToday;
     container.innerHTML = `<div class="loading-card"><span>${emptyMsg}</span></div>`;
     return;
   }
@@ -963,7 +1497,7 @@ function renderFixtures() {
 
     let lineupContainerHTML = "";
     if (game.home_team_id && game.home_team_id !== "0" && game.away_team_id && game.away_team_id !== "0") {
-      const lineupBtnText = state.lang === "tr" ? "Kadro Göster" : "Show Lineups";
+      const lineupBtnText = translations[state.lang].lineupShow;
       lineupContainerHTML = `
         <div class="lineup-toggle-container">
           <button id="lineup-btn-${game.id}" class="lineup-toggle-btn">▼ ${lineupBtnText}</button>
@@ -1046,23 +1580,20 @@ function renderStandings() {
 
     const table = document.createElement("table");
     table.className = "standings-table";
-    const thGF = state.lang === "tr" ? "AG" : "GF";
-    const thGA = state.lang === "tr" ? "YG" : "GA";
-    const thGD = state.lang === "tr" ? "AV" : "GD";
-    const thPts = state.lang === "tr" ? "P" : "Pts";
+    const dict = translations[state.lang];
     table.innerHTML = `
       <thead>
         <tr>
           <th style="width: 8%" class="table-num">#</th>
-          <th style="width: 32%">${translations[state.lang].thPlayer}</th>
-          <th style="width: 7%">O</th>
-          <th style="width: 7%">G</th>
-          <th style="width: 7%">B</th>
-          <th style="width: 7%">M</th>
-          <th style="width: 7%">${thGF}</th>
-          <th style="width: 7%">${thGA}</th>
-          <th style="width: 7%">${thGD}</th>
-          <th style="width: 8%">${thPts}</th>
+          <th style="width: 32%">${dict.thPlayer}</th>
+          <th style="width: 7%">${dict.standingMP}</th>
+          <th style="width: 7%">${dict.standingW}</th>
+          <th style="width: 7%">${dict.standingD}</th>
+          <th style="width: 7%">${dict.standingL}</th>
+          <th style="width: 7%">${dict.standingGF}</th>
+          <th style="width: 7%">${dict.standingGA}</th>
+          <th style="width: 7%">${dict.standingGD}</th>
+          <th style="width: 8%">${dict.standingPts}</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -1095,7 +1626,7 @@ function renderStandings() {
     teamsInGroup.forEach((team, idx) => {
       const tr = document.createElement("tr");
       
-      const teamNameText = state.lang === "tr" ? (teamNameTR[team.name_en] || team.name_en) : team.name_en;
+      const teamNameText = (teamNames[state.lang] || teamNames.en)[team.name_en] || team.name_en;
 
       tr.innerHTML = `
         <td class="table-num">${idx + 1}</td>
@@ -1213,7 +1744,8 @@ function openSquadModal(teamId, teamName, flagUrl) {
   state.modalTeamId = teamId;
   const modal = document.getElementById("squad-modal");
   
-  const displayTeamName = teamName === "Turkey" && state.lang === "tr" ? "Türkiye" : teamName;
+  const names = teamNames[state.lang] || teamNames.en;
+  const displayTeamName = names[teamName] || teamName;
   document.getElementById("modal-team-name").innerText = displayTeamName;
   document.getElementById("modal-team-flag").setAttribute("src", flagUrl || getFlagFallback(teamName));
   document.getElementById("player-search").value = "";
@@ -1221,7 +1753,7 @@ function openSquadModal(teamId, teamName, flagUrl) {
   activeRoster = getFullSquad(teamId, teamName);
 
   if (activeRoster.length === 0) {
-    const noDataMsg = state.lang === "tr" ? "Bu takım için kadro verisi mevcut değil." : "Squad data is not available for this team.";
+    const noDataMsg = translations[state.lang].noSquadData;
     document.getElementById("squad-list-body").innerHTML = `
       <tr><td colspan="3" style="text-align:center; padding:20px; color:var(--text-secondary);">📋 ${noDataMsg}</td></tr>
     `;
@@ -1262,19 +1794,18 @@ function toggleLineup(matchId, homeId, homeName, awayId, awayName) {
   
   if (!drawer || !btn) return;
   
+  const dict = translations[state.lang];
   const isExpanded = drawer.classList.toggle("expanded");
   
-  const showText = state.lang === "tr" ? "Kadro Göster" : "Show Lineups";
-  const hideText = state.lang === "tr" ? "Kadro Gizle" : "Hide Lineups";
-  btn.innerHTML = `${isExpanded ? "▲" : "▼"} ${isExpanded ? hideText : showText}`;
+  btn.innerHTML = `${isExpanded ? "▲" : "▼"} ${isExpanded ? dict.lineupHide : dict.lineupShow}`;
   
   if (isExpanded && drawer.innerHTML === "") {
     const homeSquad = getFullSquad(homeId, homeName);
     const awaySquad = getFullSquad(awayId, awayName);
 
-    const noDataMsg = state.lang === "tr" ? "Kadro verisi mevcut değil" : "Squad data not available";
-    const startingTitle = state.lang === "tr" ? "İlk 11 (Starting XI)" : "Starting XI";
-    const subsTitle = state.lang === "tr" ? "Yedekler (Substitutes)" : "Substitutes";
+    const noDataMsg = dict.noSquadDataShort;
+    const startingTitle = dict.startingXI;
+    const subsTitle = dict.substitutes;
 
     function buildLineupHTML(squad) {
       if (squad.length === 0) {
@@ -1326,11 +1857,12 @@ function renderRoster(roster) {
   const tbody = document.getElementById("squad-list-body");
   tbody.innerHTML = "";
 
+  const dict = translations[state.lang];
   const posLabels = {
-    GK: state.lang === "tr" ? "Kaleciler (Goalkeepers)" : "Goalkeepers",
-    DEF: state.lang === "tr" ? "Defans Oyuncuları (Defenders)" : "Defenders",
-    MID: state.lang === "tr" ? "Orta Saha Oyuncuları (Midfielders)" : "Midfielders",
-    FWD: state.lang === "tr" ? "Forvet Oyuncuları (Forwards)" : "Forwards"
+    GK: dict.goalkeepers,
+    DEF: dict.defenders,
+    MID: dict.midfielders,
+    FWD: dict.forwards
   };
 
   let currentPos = null;
@@ -1351,17 +1883,10 @@ function renderRoster(roster) {
     const tr = document.createElement("tr");
 
     let posLabel = player.pos;
-    if (state.lang === "tr") {
-      if (player.pos === "GK") posLabel = translations.tr.posGK;
-      if (player.pos === "DEF") posLabel = translations.tr.posDEF;
-      if (player.pos === "MID") posLabel = translations.tr.posMID;
-      if (player.pos === "FWD") posLabel = translations.tr.posFWD;
-    } else {
-      if (player.pos === "GK") posLabel = translations.en.posGK;
-      if (player.pos === "DEF") posLabel = translations.en.posDEF;
-      if (player.pos === "MID") posLabel = translations.en.posMID;
-      if (player.pos === "FWD") posLabel = translations.en.posFWD;
-    }
+    if (player.pos === "GK") posLabel = dict.posGK;
+    if (player.pos === "DEF") posLabel = dict.posDEF;
+    if (player.pos === "MID") posLabel = dict.posMID;
+    if (player.pos === "FWD") posLabel = dict.posFWD;
 
     const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(player.name)}`;
     tr.innerHTML = `
@@ -1403,7 +1928,7 @@ function filterMatches(query) {
     return homeName.includes(q) || awayName.includes(q);
   });
   if (filtered.length === 0) {
-    const noMatch = state.lang === "tr" ? "Eşleşme bulunamadı." : "No matches found.";
+    const noMatch = translations[state.lang].noMatchFound;
     container.innerHTML = `<div class="loading-card"><span>${noMatch}</span></div>`;
     return;
   }
@@ -1419,7 +1944,7 @@ function filterMatches(query) {
 
     let lineupContainerHTML = "";
     if (game.home_team_id && game.home_team_id !== "0" && game.away_team_id && game.away_team_id !== "0") {
-      const lineupBtnText = state.lang === "tr" ? "Kadro Göster" : "Show Lineups";
+      const lineupBtnText = translations[state.lang].lineupShow;
       lineupContainerHTML = `
         <div class="lineup-toggle-container">
           <button id="lineup-btn-${game.id}" class="lineup-toggle-btn">▼ ${lineupBtnText}</button>
@@ -1478,12 +2003,48 @@ function filterMatches(query) {
 
 
 // --- Localization Update ---
+function buildLangDropdown() {
+  const dropdown = document.getElementById("lang-dropdown");
+  dropdown.innerHTML = "";
+  supportedLangs.forEach(lang => {
+    const btn = document.createElement("button");
+    btn.setAttribute("data-lang", lang);
+    btn.innerHTML = `<span>${langFlags[lang]}</span> <span>${langLabels[lang]}</span>`;
+    if (lang === state.lang) btn.classList.add("active-lang");
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      state.lang = lang;
+      if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+        chrome.storage.local.set({ lang: state.lang });
+      } else {
+        localStorage.setItem("wc_lang", state.lang);
+      }
+      updateLanguageUI();
+      renderAll();
+      dropdown.classList.remove("open");
+    });
+    dropdown.appendChild(btn);
+  });
+}
+
 function updateLanguageUI() {
   const dict = translations[state.lang];
   
+  // RTL support
+  if (state.lang === "ar" || state.lang === "fa") {
+    document.body.classList.add("rtl");
+  } else {
+    document.body.classList.remove("rtl");
+  }
+
   // Header
   document.getElementById("header-title").innerText = dict.title;
-  document.getElementById("lang-btn").innerText = state.lang === "en" ? "TR" : "EN";
+  document.getElementById("lang-btn").innerHTML = `🌐 ${langFlags[state.lang] || ""} ${state.lang.toUpperCase()}`;
+  
+  // Update active state in dropdown
+  document.querySelectorAll(".lang-dropdown button").forEach(btn => {
+    btn.classList.toggle("active-lang", btn.getAttribute("data-lang") === state.lang);
+  });
   
   // Tabs
   document.getElementById("tab-live").innerText = dict.live;
