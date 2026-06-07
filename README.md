@@ -35,7 +35,7 @@ A lightweight Chrome Extension that brings the FIFA World Cup 2026 right into yo
 - **Squad Details** — View player rosters with position filters (GK/DEF/MID/FWD)
 - **Stadium Info** — Venue details on every match card
 - **Scorers** — Goal scorer display on completed/live matches
-- **Bilingual** — Turkish 🇹🇷 & English 🇬🇧 language toggle
+- **16 Languages** — Full multilingual support with dropdown selector
 - **Auto Refresh** — Data refreshes every 2 minutes
 - **Offline Support** — Full fallback data (48 teams, 12 groups, 104 matches, 16 stadiums)
 - **Dark Theme** — Glass morphism design with gold accents
@@ -100,7 +100,7 @@ FIFA Dünya Kupası 2026'yı tarayıcınıza taşıyan hafif bir Chrome Eklentis
 - **Kadro Bilgisi** — Pozisyona göre (KL/DEF/ORT/HÜC) oyuncu listeleri
 - **Stadyum Bilgisi** — Her maç kartında mekan detayları
 - **Golcüler** — Bitmiş/Canlı maçlarda gol atan oyuncular
-- **İki Dilli** — Türkçe 🇹🇷 & İngilizce 🇬🇧 dil seçeneği
+- **16 Dil Desteği** — Çok dilli dropdown dil seçici
 - **Otomatik Yenileme** — Veriler her 2 dakikada bir güncellenir
 - **Çevrimdışı Desteği** — Tam yedek veri (48 takım, 12 grup, 104 maç, 16 stadyum)
 - **Karanlık Tema** - Cam efektli tasarım, altın vurgular
