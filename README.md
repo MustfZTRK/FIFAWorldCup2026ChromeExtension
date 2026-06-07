@@ -16,8 +16,9 @@
 </p>
 
 ---
-<a href="https://ibb.co/7Jbws4mj"><img src="https://i.ibb.co/HDXW5d8B/Ekran-g-r-nt-s-2026-06-07-215631.png" alt="Ekran görüntüsü 2026 06 07 215631" border="0"></a>
-<a href="https://ibb.co/pYTzc8G"><img src="https://i.ibb.co/Ncqj5PQ/Ekran-g-r-nt-s-2026-06-07-215636.png" alt="Ekran görüntüsü 2026 06 07 215636" border="0"></a>
+<a href="https://ibb.co/Q7ch6xwK"><img src="https://i.ibb.co/7xzBG0m1/Ekran-g-r-nt-s-2026-06-07-224113.png" alt="Ekran görüntüsü 2026 06 07 224113" border="0"></a>
+<a href="https://ibb.co/r2YmrprB"><img src="https://i.ibb.co/k2jxCDCL/Ekran-g-r-nt-s-2026-06-07-224119.png" alt="Ekran görüntüsü 2026 06 07 224119" border="0"></a>
+<a href="https://ibb.co/GQzdpp6W"><img src="https://i.ibb.co/4RhFttq8/Ekran-g-r-nt-s-2026-06-07-224124.png" alt="Ekran görüntüsü 2026 06 07 224124" border="0"></a>
 ## 🇬🇧 English
 
 ### About
