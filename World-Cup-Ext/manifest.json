@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "FIFA World Cup 2026 Live",
+  "version": "1.0",
+  "description": "2026 FIFA World Cup fixtures, standings, live scores, cards and squad details.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://worldcup26.ir/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
