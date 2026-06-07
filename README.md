@@ -43,7 +43,7 @@ A lightweight Chrome Extension that brings the FIFA World Cup 2026 right into yo
 #### Option 1 — Clone & Load (Developer)
 
 ```bash
-git clone https://github.com/your-username/World-Cup-Ext.git
+git clone https://github.com/MustfZTRK/FIFAWorldCup2026ChromeExtension.git
 ```
 
 1. Open **Google Chrome** and navigate to `chrome://extensions/`
@@ -54,7 +54,7 @@ git clone https://github.com/your-username/World-Cup-Ext.git
 
 #### Option 2 — Install from Release
 
-1. Download the latest `.zip` or `.rar` from [Releases](https://github.com/your-username/World-Cup-Ext/releases)
+1. Download the latest `.zip` or `.rar` from [Releases](https://github.com/MustfZTRK/FIFAWorldCup2026ChromeExtension/releases)
 2. Extract the archive to a permanent folder
 3. Open `chrome://extensions/` → Enable **Developer mode**
 4. Click **Load unpacked** → Select the extracted folder
@@ -108,7 +108,7 @@ FIFA Dünya Kupası 2026'yı tarayıcınıza taşıyan hafif bir Chrome Eklentis
 #### Seçenek 1 — Klonla ve Yükle (Geliştirici)
 
 ```bash
-git clone https://github.com/------/World-Cup-Ext.git
+git clone https://github.com/MustfZTRK/FIFAWorldCup2026ChromeExtension.git
 ```
 
 1. **Google Chrome**'u açın ve `chrome://extensions/` adresine gidin
@@ -119,7 +119,7 @@ git clone https://github.com/------/World-Cup-Ext.git
 
 #### Seçenek 2 — Sürümden Yükle
 
-1. [Releases](https://github.com/your-username/World-Cup-Ext/releases) sayfasından en son `.zip` veya `.rar` dosyasını indirin
+1. [Releases](https://github.com/MustfZTRK/FIFAWorldCup2026ChromeExtension/releases) sayfasından en son `.zip` veya `.rar` dosyasını indirin
 2. Arşivi kalıcı bir klasöre çıkarın
 3. `chrome://extensions/` → **Geliştirici modunu** etkinleştirin
 4. **Paketlenmemiş yükle** → Çıkarılan klasörü seçin
