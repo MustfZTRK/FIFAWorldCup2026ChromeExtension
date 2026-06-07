@@ -182,5 +182,5 @@ MIT License — feel free to use, modify, and distribute.
 ---
 
 <p align="center">
-  Made with ⚽ for football fans worldwide
+  Made for football fans worldwide
 </p>
