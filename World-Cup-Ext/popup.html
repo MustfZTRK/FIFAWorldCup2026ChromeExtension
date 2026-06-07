@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIFA World Cup 2026</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo-area">
+      <span class="logo-icon">🏆</span>
+      <h1 id="header-title">World Cup 2026</h1>
+    </div>
+    <div class="actions">
+      <!-- Language Toggle -->
+      <button id="lang-btn" class="icon-btn">EN</button>
+      <!-- Refresh Button -->
+      <button id="refresh-btn" class="icon-btn">🔄</button>
+    </div>
+  </header>
+
+  <!-- Live Status Bar -->
+  <div class="status-bar">
+    <span id="status-text">Loading matches...</span>
+  </div>
+
+  <!-- Main Tabs -->
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="live" id="tab-live">Live</button>
+    <button class="tab-btn" data-tab="fixtures" id="tab-fixtures">Fixtures</button>
+    <button class="tab-btn" data-tab="standings" id="tab-standings">Standings</button>
+    <button class="tab-btn" data-tab="bracket" id="tab-bracket">Bracket</button>
+    <button class="tab-btn" data-tab="donate" id="tab-donate">Donate</button>
+  </nav>
+
+  <!-- Content Panels -->
+  <main class="content-panel">
+    
+    <!-- Tab: Live Matches -->
+    <section id="panel-live" class="tab-content active">
+      <div id="live-container" class="card-list">
+        <!-- Live matches will be injected here -->
+      </div>
+    </section>
+
+    <!-- Tab: Fixtures -->
+    <section id="panel-fixtures" class="tab-content">
+      <div class="sub-nav">
+        <button class="sub-tab-btn active" data-subtab="by-date" id="subtab-bydate">By Date</button>
+        <button class="sub-tab-btn" data-subtab="today" id="subtab-today">Today</button>
+        <button class="sub-tab-btn" data-subtab="knockouts" id="subtab-knockouts">Knockouts</button>
+      </div>
+      <div class="match-search-container">
+        <input type="text" id="match-search" class="match-search-input" placeholder="Search by team name...">
+      </div>
+      <div id="fixtures-container" class="card-list">
+        <!-- Fixtures will be injected here -->
+      </div>
+    </section>
+
+    <!-- Tab: Standings -->
+    <section id="panel-standings" class="tab-content">
+      <div class="groups-nav">
+        <select id="group-select" class="dropdown">
+          <option value="ALL" id="opt-all-groups">All Groups</option>
+          <option value="A">Group A</option>
+          <option value="B">Group B</option>
+          <option value="C">Group C</option>
+          <option value="D">Group D</option>
+          <option value="E">Group E</option>
+          <option value="F">Group F</option>
+          <option value="G">Group G</option>
+          <option value="H">Group H</option>
+          <option value="I">Group I</option>
+          <option value="J">Group J</option>
+          <option value="K">Group K</option>
+          <option value="L">Group L</option>
+        </select>
+      </div>
+      <div id="standings-container" class="standings-table-container">
+        <!-- Standings will be injected here -->
+      </div>
+    </section>
+
+    <!-- Tab: Bracket -->
+    <section id="panel-bracket" class="tab-content">
+      <div class="bracket-wrapper">
+        <div id="bracket-container" class="bracket-scroll">
+          <!-- Visual brackets (R16, QF, SF, Final) will be injected here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab: Donate -->
+    <section id="panel-donate" class="tab-content">
+      <div class="donate-panel">
+        <div class="donate-header">
+          <span class="donate-icon">☕</span>
+          <h3 data-i18n="donate_title">Buy Me a Coffee</h3>
+          <p class="donate-subtitle" data-i18n="donate_subtitle">If you find this extension useful, consider supporting development!</p>
+        </div>
+        <div class="donate-list">
+          <div class="donate-item">
+            <div class="donate-network">
+              <span class="donate-coin-icon">₿</span>
+              <div>
+                <strong>BTC</strong>
+                <span class="donate-label">Bitcoin</span>
+              </div>
+            </div>
+            <div class="donate-address-row">
+              <code class="donate-address" id="donate-btc">14dfjBNLMznPGUA9JCHi8eGWH2tZq23pjJ</code>
+              <button class="copy-btn" data-copy="donate-btc" title="Copy">📋</button>
+            </div>
+          </div>
+          <div class="donate-item">
+            <div class="donate-network">
+              <span class="donate-coin-icon">⟠</span>
+              <div>
+                <strong>ETC</strong>
+                <span class="donate-label">Ethereum Classic</span>
+              </div>
+            </div>
+            <div class="donate-address-row">
+              <code class="donate-address" id="donate-etc">0xef7ba89cd02d05dbc71948d34ecc3b3375b108bb</code>
+              <button class="copy-btn" data-copy="donate-etc" title="Copy">📋</button>
+            </div>
+          </div>
+          <div class="donate-item">
+            <div class="donate-network">
+              <span class="donate-coin-icon">◆</span>
+              <div>
+                <strong>BNB</strong>
+                <span class="donate-label">BNB Smart Chain (BEP20)</span>
+              </div>
+            </div>
+            <div class="donate-address-row">
+              <code class="donate-address" id="donate-bnb">0xef7ba89cd02d05dbc71948d34ecc3b3375b108bb</code>
+              <button class="copy-btn" data-copy="donate-bnb" title="Copy">📋</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Squad Detail Modal -->
+  <div id="squad-modal" class="modal">
+    <div class="modal-content glass">
+      <div class="modal-header">
+        <div class="team-header-info">
+          <img id="modal-team-flag" src="" class="modal-flag" alt="Flag">
+          <h2 id="modal-team-name">Team Squad</h2>
+        </div>
+        <span class="close-btn" id="modal-close">&times;</span>
+      </div>
+      <div class="modal-search">
+        <input type="text" id="player-search" placeholder="Search players...">
+      </div>
+      <div class="modal-body">
+        <table class="squad-table">
+          <thead>
+            <tr>
+              <th style="width: 15%" id="th-num">#</th>
+              <th style="width: 55%" id="th-player">Player</th>
+              <th style="width: 30%" id="th-pos">Position</th>
+            </tr>
+          </thead>
+          <tbody id="squad-list-body">
+            <!-- Player rows injected here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
