@@ -16,7 +16,8 @@
 </p>
 
 ---
-
+<a href="https://ibb.co/7Jbws4mj"><img src="https://i.ibb.co/HDXW5d8B/Ekran-g-r-nt-s-2026-06-07-215631.png" alt="Ekran görüntüsü 2026 06 07 215631" border="0"></a>
+<a href="https://ibb.co/pYTzc8G"><img src="https://i.ibb.co/Ncqj5PQ/Ekran-g-r-nt-s-2026-06-07-215636.png" alt="Ekran görüntüsü 2026 06 07 215636" border="0"></a>
 ## 🇬🇧 English
 
 ### About
