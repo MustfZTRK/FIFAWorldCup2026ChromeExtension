@@ -172,8 +172,6 @@ World-Cup-Ext/
 ├── icon16.png             # Extension icon (16x16)
 ├── icon48.png             # Extension icon (48x48)
 ├── icon128.png            # Extension icon (128x128)
-├── World-Cup-Ext.rar      # Packaged release
-└── worldcup2026-main/     # Backend API source (reference)
 ```
 
 ## 📄 License
